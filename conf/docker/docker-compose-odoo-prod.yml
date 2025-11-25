@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:17
+    container_name: odoo-prod-db
+    hostname: odoo-prod-db
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "odoo"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    user: 1000:1000
+    volumes:
+      - /home/administrator/odoo/odoo-prod/db:/var/lib/postgresql/data:rw
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    restart: always
+    
+  odoo:
+    image: silverlit-odoo17:latest
+    container_name: odoo-prod-server
+    hostname: odoo-prod-server
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: curl -f http://localhost:8069/ || exit 1
+    ports:
+      - 10003:8069
+    user: 1000:1000
+    volumes:
+      - /home/administrator/odoo/odoo-prod/web-data:/var/lib/odoo:rw
+      - /home/administrator/odoo/odoo-prod/config:/etc/odoo:rw
+      - /home/administrator/odoo/odoo-prod/custom_addons:/mnt/custom_addons:rw
+      - /home/administrator/odoo/odoo-prod/third_party_addons:/mnt/third_party_addons:rw      
+      - /home/administrator/odoo/odoo-prod/cache:/.cache/pip:rw
+      - /home/administrator/odoo/odoo-prod/local:/.local:rw
+      - /home/administrator/odoo/odoo-prod/backup:/backup:rw
+      - /home/administrator/odoo/mnt/Hana_Image_upload/odoo-prod/Upload:/image-upload/Upload:rw
+      - /home/administrator/odoo/mnt/Hana_Image_upload/odoo-prod/Success:/image-upload/Success:rw
+      - /home/administrator/odoo/mnt/Hana_Image_upload/odoo-prod/Failed:/image-upload/Failed:rw
+    environment:
+      HOST: odoo-prod-db
+      PORT: 5432
+      USER: odoo
+      PASSWORD: odoo
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy

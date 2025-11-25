@@ -1,0 +1,64 @@
+# Python cache files
+*.pyc
+*.pyo
+__pycache__/
+
+# VS Code settings
+.vscode/
+
+#Add cursor rule and setting to git
+# Cursor settings
+#.cursor/*
+
+# GitHub Actions
+#.github/
+
+# Ignore compiled files and temp files
+*.log
+*.tmp
+
+# Bytecode files
+*.pyo
+*.pyd
+*.pyc
+
+# MacOS specific
+.DS_Store
+
+# Odoo caches and temp files
+*.egg-info/
+
+# Ignore environment files (for virtualenv or pipenv)
+.env/
+.venv/
+
+# exclude official package
+odoo/*
+filestore/*
+!filestore/README.md
+logs/*
+!logs/README.md
+.idea/
+web-data/*
+cache/*
+local/*
+
+!.gitignore
+
+# Planning and Task
+PLANNING.md
+TASK.md
+
+# Roo configuration
+.roo/
+# But include essential configuration files
+!.roo/git-guidelines.md
+!.roo/config.json
+!.roo/mcp.json
+# Claude Code local settings
+.claude/
+CLAUDE.local.md
+script/task_viewer.html
+
+# Kiro configuration
+.kiro/*
