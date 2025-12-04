@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hello_form" model="ir.ui.view">
+        <field name="name">hello.world.form</field>
+        <field name="model">hello.world</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="message"/>
+                    </group>
+                    <div>
+                        <button name="action_say_hello" 
+                                type="object" 
+                                string="Say Hello" 
+                                class="btn-primary"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hello_world_tree" model="ir.ui.view">
+        <field name="name">hello.world.tree</field>
+        <field name="model">hello.world</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hello_world" model="ir.actions.act_window">
+        <field name="name">Hello World</field>
+        <field name="res_model">hello.world</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_hello_world_root" 
+              name="Hello World" 
+              sequence="10"/>
+
+    <menuitem id="menu_hello_world_main" 
+              name="Manage Greetings" 
+              parent="menu_hello_world_root" 
+              action="action_hello_world" 
+              sequence="10"/>
+
+</odoo>
